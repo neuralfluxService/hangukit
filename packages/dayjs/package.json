@@ -1,0 +1,52 @@
+{
+  "name": "@kr-kit/dayjs",
+  "version": "0.1.0",
+  "description": "@kr-kit/holidays-core의 dayjs 플러그인 — dayjs().isKoreanHoliday(), dayjs().addBusinessDays(n) 등",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "korea",
+    "korean",
+    "dayjs",
+    "dayjs-plugin",
+    "holidays",
+    "공휴일",
+    "영업일"
+  ],
+  "dependencies": {
+    "@kr-kit/holidays-core": "workspace:^"
+  },
+  "peerDependencies": {
+    "dayjs": "^1.11.0"
+  },
+  "devDependencies": {
+    "dayjs": "^1.11.13"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

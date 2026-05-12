@@ -1,0 +1,50 @@
+{
+  "name": "@kr-kit/zod",
+  "version": "0.1.0",
+  "description": "@kr-kit/core-validate의 zod(v3·v4) 어댑터 — z.string().pipe(brn()) 같은 스키마 헬퍼",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "korea",
+    "korean",
+    "zod",
+    "validation",
+    "사업자등록번호"
+  ],
+  "dependencies": {
+    "@kr-kit/core-validate": "workspace:^"
+  },
+  "peerDependencies": {
+    "zod": "^3.23.0 || ^4.0.0"
+  },
+  "devDependencies": {
+    "zod": "^3.24.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

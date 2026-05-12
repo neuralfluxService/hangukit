@@ -1,0 +1,46 @@
+{
+  "name": "@kr-kit/core-validate",
+  "version": "0.1.0",
+  "description": "한국 식별자(사업자등록번호·법인등록번호·휴대폰·한글이름·계좌번호·우편번호) 검증/포맷, 주민번호 마스킹 — 의존성 0",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "korea",
+    "korean",
+    "validation",
+    "사업자등록번호",
+    "business-registration-number",
+    "법인등록번호",
+    "주민등록번호",
+    "rrn",
+    "phone",
+    "bank-account"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

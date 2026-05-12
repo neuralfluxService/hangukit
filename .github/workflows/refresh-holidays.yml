@@ -1,0 +1,31 @@
+name: Refresh holiday data
+
+# 매년 공휴일·대체공휴일·임시공휴일이 확정되면 데이터를 갱신해 PR을 연다.
+# 한국천문연구원 특일정보 API는 보통 올해+1년까지 제공한다.
+on:
+  schedule:
+    - cron: "0 3 1 1,7 *" # 1월·7월 1일 (연초 확정분 + 하반기 보강분)
+  workflow_dispatch:
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Fetch holidays
+        env:
+          DATA_GO_KR_SERVICE_KEY: ${{ secrets.DATA_GO_KR_SERVICE_KEY }}
+        run: pnpm fetch:holidays
+      - run: pnpm --filter "@kr-kit/holidays-core" build && pnpm --filter "@kr-kit/holidays-core" test
+      - uses: peter-evans/create-pull-request@v7
+        with:
+          branch: chore/refresh-holidays
+          title: "chore: refresh Korean holiday data"
+          commit-message: "chore: refresh Korean holiday data (한국천문연구원 특일정보 API)"
+          body: "`pnpm fetch:holidays` 자동 실행 결과. 새로 확정된 공휴일/대체공휴일/임시공휴일을 검토하세요."
