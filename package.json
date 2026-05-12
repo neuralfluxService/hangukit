@@ -10,9 +10,13 @@
   "scripts": {
     "build": "turbo run build",
     "test": "turbo run test",
+    "test:tz": "node scripts/run-tz-matrix.mjs",
     "typecheck": "turbo run typecheck",
     "lint": "turbo run lint",
+    "coverage": "turbo run test -- --coverage",
+    "smoke": "node scripts/run-install-smoke.mjs",
     "fetch:holidays": "tsx scripts/fetch-holidays.ts",
+    "verify:holidays": "tsx scripts/verify-holidays.ts",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "turbo run build && changeset publish"
@@ -20,7 +24,11 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.17.0",
     "@changesets/cli": "^2.27.10",
+    "@hyunbinseo/holidays-kr": "^4.2026.0",
     "@types/node": "^22.10.2",
+    "@vitest/coverage-v8": "^2.1.8",
+    "expect-type": "^1.2.0",
+    "fast-check": "^4.0.0",
     "publint": "^0.2.12",
     "tsup": "^8.3.5",
     "tsx": "^4.19.2",

@@ -7,5 +7,5 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["@kr-kit/playground"]
+  "ignore": ["smoke-test", "zod-v4-smoke"]
 }

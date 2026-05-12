@@ -1,0 +1,35 @@
+name: Verify holiday data
+
+# 커밋된 공휴일 데이터가 한국천문연구원 API와 일치하는지 검증한다.
+# secret을 쓰므로 포크 PR에서는 돌지 않게 push/dispatch/cron 만 트리거한다(보안).
+on:
+  push:
+    branches: [main]
+    paths:
+      - "packages/holidays-core/src/holidays-data.ts"
+      - "scripts/**"
+      - ".github/workflows/verify-data.yml"
+  schedule:
+    - cron: "0 4 15 1,7 *" # 1월·7월 15일 — 새 연도 확정분 반영 점검
+  workflow_dispatch:
+
+jobs:
+  verify-holidays:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Verify against 한국천문연구원 API
+        env:
+          DATA_GO_KR_SERVICE_KEY: ${{ secrets.DATA_GO_KR_SERVICE_KEY }}
+        run: |
+          if [ -z "$DATA_GO_KR_SERVICE_KEY" ]; then
+            echo "::warning::DATA_GO_KR_SERVICE_KEY secret 미설정 — 검증 건너뜀"
+            exit 0
+          fi
+          pnpm verify:holidays

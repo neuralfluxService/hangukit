@@ -11,6 +11,8 @@ import {
   isKrxBusinessDay,
   isKrxHoliday,
   isWeekend,
+  nearestBusinessDayBackward,
+  nearestBusinessDayForward,
   nextBusinessDay,
   previousBusinessDay,
   subBusinessDays,
@@ -63,14 +65,19 @@ describe("공휴일 데이터 (알려진 패턴)", () => {
   });
 
   it("임시공휴일 오버라이드가 반영된다", () => {
-    expect(holidaysOn("2025-10-10").map((h) => h.kind)).toEqual(["temporary"]);
-    expect(holidaysOn("2024-10-01").map((h) => h.kind)).toEqual(["temporary"]);
-    expect(holidaysOn("2023-10-02").map((h) => h.kind)).toEqual(["temporary"]);
+    expect(holidaysOn("2025-01-27").map((h) => h.kind)).toEqual(["temporary"]); // 설날 끼인날
+    expect(holidaysOn("2024-10-01").map((h) => h.kind)).toEqual(["temporary"]); // 국군의날
+    expect(holidaysOn("2023-10-02").map((h) => h.kind)).toEqual(["temporary"]); // 추석 끼인날
   });
 
   it("선거일도 공휴일로 본다", () => {
     expect(isHoliday("2024-04-10")).toBe(true); // 제22대 국회의원선거
     expect(holidaysOn("2024-04-10").map((h) => h.kind)).toEqual(["election"]);
+  });
+
+  it("2026년 제헌절(7/17) 부활분이 반영된다", () => {
+    expect(isHoliday("2026-07-17")).toBe(true);
+    expect(holidaysOn("2026-07-17").map((h) => h.name)).toEqual(["제헌절"]);
   });
 
   it("같은 날 여러 공휴일(2025-05-05 = 어린이날 + 부처님오신날)", () => {
@@ -101,8 +108,26 @@ describe("영업일 산술", () => {
     expect(previousBusinessDay("2024-02-13")).toBe("2024-02-08");
   });
 
-  it("extraHolidays 옵션", () => {
+  it("nearestBusinessDayForward / nearestBusinessDayBackward — 영업일이면 그대로", () => {
+    expect(nearestBusinessDayForward("2024-02-13")).toBe("2024-02-13"); // 화요일 = 영업일
+    expect(nearestBusinessDayForward("2024-02-10")).toBe("2024-02-13"); // 토 → 다음 영업일
+    expect(nearestBusinessDayForward("2024-02-12")).toBe("2024-02-13"); // 대체공휴일 → 다음 영업일
+    expect(nearestBusinessDayBackward("2024-02-13")).toBe("2024-02-13");
+    expect(nearestBusinessDayBackward("2024-02-11")).toBe("2024-02-08"); // 일+설날 → 이전 영업일
+  });
+
+  it("extraHolidays 옵션 (영업일 산술 + nearest)", () => {
     expect(addBusinessDays("2024-02-13", 1, { extraHolidays: ["2024-02-14"] })).toBe("2024-02-15");
+    expect(nearestBusinessDayForward("2024-02-14", { extraHolidays: ["2024-02-14"] })).toBe(
+      "2024-02-15",
+    );
+    expect(nearestBusinessDayBackward("2024-02-14", { extraHolidays: ["2024-02-14"] })).toBe(
+      "2024-02-13",
+    );
+  });
+
+  it("addBusinessDays — 정수가 아니면 throw", () => {
+    expect(() => addBusinessDays("2024-02-13", 1.5)).toThrow();
   });
 
   it("businessDaysBetween", () => {

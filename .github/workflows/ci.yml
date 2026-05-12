@@ -18,10 +18,25 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
       - run: pnpm typecheck
-      - run: pnpm test
-      - name: publint / are-the-types-wrong (node16/bundler 기준)
+      - name: Test + coverage gates
+        run: pnpm coverage
+      - name: TZ matrix (Asia/Seoul, UTC, America/Los_Angeles, Pacific/Kiritimati)
+        run: pnpm test:tz
+      - name: Install smoke (ESM / CJS / zod v4, packed tarballs)
+        run: pnpm smoke
+      - name: publint
         run: |
+          set -e
           for p in core-validate zod holidays-core dayjs; do
             pnpm --filter "@kr-kit/$p" exec publint
-            pnpm --filter "@kr-kit/$p" exec attw --pack . --profile node16 || true
           done
+      - name: are-the-types-wrong (node16 profile)
+        run: |
+          set -e
+          for p in core-validate zod holidays-core; do
+            pnpm --filter "@kr-kit/$p" exec attw --pack . --profile node16
+          done
+          # @kr-kit/dayjs: tsup 가 default export → CJS 는 `module.exports = fn` 로 나와 런타임은 정상이지만
+          # .d.cts 가 `export default` 라 attw 가 FalseExportDefault 로 지적함. esModuleInterop 환경에서 동작하므로 경고만.
+          pnpm --filter "@kr-kit/dayjs" exec attw --pack . --profile node16 \
+            || echo "::warning::@kr-kit/dayjs attw FalseExportDefault — cosmetic (runtime require/import 정상)"

@@ -4,27 +4,35 @@
 
 ## 패키지
 
-| 패키지 | 설명 | 상태 |
-| --- | --- | --- |
-| [`@kr-kit/core-validate`](packages/core-validate) | 의존성 0. 사업자등록번호·법인등록번호·휴대폰·한글이름·계좌번호·우편번호 검증/포맷, 주민번호 마스킹 | ✅ |
-| [`@kr-kit/zod`](packages/zod) | `@kr-kit/core-validate`의 zod(v3·v4) 어댑터 | ✅ |
-| [`@kr-kit/holidays-core`](packages/holidays-core) | 의존성 0(음력만). 공휴일·대체공휴일·임시공휴일 규칙 엔진, 영업일 산술, KRX 휴장일 | ✅ |
-| [`@kr-kit/dayjs`](packages/dayjs) | `@kr-kit/holidays-core`의 dayjs 플러그인 | ✅ |
-| `@kr-kit/valibot`, `@kr-kit/date-fns`, `@kr-kit/temporal` | 추가 어댑터 | 🔜 |
+| 패키지 | 설명 | 번들(ESM, 압축 전) | 상태 |
+| --- | --- | --- | --- |
+| [`@kr-kit/core-validate`](packages/core-validate) | 의존성 0. 사업자등록번호·법인등록번호·휴대폰·한글이름·계좌번호·우편번호 검증/포맷, 주민번호 마스킹 | ~8 KB | ✅ |
+| [`@kr-kit/zod`](packages/zod) | `@kr-kit/core-validate`의 zod(v3·v4) 어댑터 | ~2 KB | ✅ |
+| [`@kr-kit/holidays-core`](packages/holidays-core) | 의존성 0·런타임 네트워크 호출 없음. 공휴일·대체공휴일·임시공휴일 데이터(2021~2026) + 영업일 산술 + KRX 휴장일 | ~13 KB(데이터 포함) | ✅ |
+| [`@kr-kit/dayjs`](packages/dayjs) | `@kr-kit/holidays-core`의 dayjs 플러그인 | ~2 KB | ✅ |
+| `@kr-kit/valibot`, `@kr-kit/date-fns`, `@kr-kit/temporal` | 추가 어댑터 | — | 🔜 |
+
+> `@kr-kit/dayjs`는 ESM/CJS 둘 다 제공합니다. CJS 빌드는 `module.exports = plugin`(즉 `require("@kr-kit/dayjs")`가 곧 플러그인 함수)이며, 타입 선언은 `export default`라 [`@arethetypeswrong`](https://arethetypeswrong.github.io/)이 `FalseExportDefault`로 표시하지만 `esModuleInterop` 환경에서는 정상 동작합니다.
 
 ## 설계 원칙
 
-- **0-dep 코어 + 얇은 어댑터** — `core-validate` / `holidays-core`는 의존성이 없거나 최소이고, 프레임워크별 패키지는 그 위에 얇게 얹습니다.
-- **런타임 네트워크 호출 없음** — 공휴일 데이터는 빌드 시점에 [공공데이터포털 한국천문연구원 특일정보 API](https://www.data.go.kr/data/15012690/openapi.do)로 받아 오버라이드(임시공휴일·선거일)만 커밋합니다. 나머지는 규칙 엔진이 계산합니다.
-- **개인정보 보호** — 주민등록번호는 **형식 검증 + 마스킹만** 제공하며 생년월일/성별 추출 API는 제공하지 않습니다.
+- **0-dep 코어 + 얇은 어댑터** — `core-validate` / `holidays-core`는 의존성이 없고, 프레임워크별 패키지는 그 위에 얇게 얹습니다(`zod`/`dayjs`는 peerDependency).
+- **런타임 네트워크 호출 없음** — 공휴일 데이터는 빌드 시점에 [공공데이터포털 한국천문연구원 특일정보 API](https://www.data.go.kr/data/15012690/openapi.do)로 받아 커밋합니다(`pnpm fetch:holidays`). `pnpm verify:holidays`로 API와 일치하는지 검증합니다.
+- **개인정보 보호** — 주민등록번호는 **형식 검증 + 마스킹만** 제공하며 생년월일/성별 추출 API는 제공하지 않습니다(개인정보 보호법).
 
 ## 개발
 
 ```bash
 pnpm install
-pnpm build
-pnpm test
+pnpm build        # tsup (ESM + CJS + d.ts)
+pnpm test         # vitest (단위 + fixture + 차등 + 속성 + 타입 테스트)
+pnpm typecheck    # tsc --noEmit (전 패키지, .test-d.ts 포함)
+pnpm coverage     # 커버리지 게이트 (statements/lines/functions ≥ 95%, branches ≥ 88%)
+pnpm test:tz      # holidays-core 를 4개 시간대에서 재실행
+pnpm smoke        # 패킹된 tarball 을 임시 디렉터리에 설치해 ESM/CJS/zod v4 소비 확인
 ```
+
+공휴일 데이터 검증은 [`docs/verification-checklist.md`](docs/verification-checklist.md) 참고. `pnpm verify:holidays`는 `DATA_GO_KR_SERVICE_KEY` 환경변수(data.go.kr 「한국천문연구원_특일 정보」 일반 인증키)가 필요합니다.
 
 ## 라이선스
 

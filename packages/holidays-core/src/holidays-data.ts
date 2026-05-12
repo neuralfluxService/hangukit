@@ -124,7 +124,6 @@ export const HOLIDAYS: Readonly<Record<string, readonly HolidayEntry[]>> = {
     { date: "2025-10-07", name: "추석", kind: "legal" },
     { date: "2025-10-08", name: "대체공휴일", kind: "substitute" },
     { date: "2025-10-09", name: "한글날", kind: "legal" },
-    { date: "2025-10-10", name: "임시공휴일", kind: "temporary" },
     { date: "2025-12-25", name: "기독탄신일", kind: "legal" },
   ],
   "2026": [
@@ -139,6 +138,7 @@ export const HOLIDAYS: Readonly<Record<string, readonly HolidayEntry[]>> = {
     { date: "2026-05-25", name: "대체공휴일", kind: "substitute" },
     { date: "2026-06-03", name: "제9회 전국동시지방선거", kind: "election" },
     { date: "2026-06-06", name: "현충일", kind: "legal" },
+    { date: "2026-07-17", name: "제헌절", kind: "legal" },
     { date: "2026-08-15", name: "광복절", kind: "legal" },
     { date: "2026-08-17", name: "대체공휴일", kind: "substitute" },
     { date: "2026-09-24", name: "추석", kind: "legal" },

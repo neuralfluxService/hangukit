@@ -1,0 +1,7 @@
+{
+  "name": "zod-v4-smoke",
+  "version": "0.0.0",
+  "private": true,
+  "description": "@kr-kit/zod 가 zod v4 와도 동작하는지 확인하는 스모크 소스 (단위 테스트는 zod v3 로 돌린다). 실행은 scripts/run-install-smoke.mjs.",
+  "type": "module"
+}

@@ -10,7 +10,8 @@ describe("@kr-kit/dayjs 플러그인", () => {
   it("isKoreanHoliday — 법정/대체/임시공휴일", () => {
     expect(dayjs("2024-02-12").isKoreanHoliday()).toBe(true); // 설날 대체공휴일
     expect(dayjs("2023-05-29").isKoreanHoliday()).toBe(true); // 부처님오신날 대체공휴일
-    expect(dayjs("2025-10-10").isKoreanHoliday()).toBe(true); // 임시공휴일
+    expect(dayjs("2025-01-27").isKoreanHoliday()).toBe(true); // 임시공휴일
+    expect(dayjs("2026-07-17").isKoreanHoliday()).toBe(true); // 제헌절(2026 부활)
     expect(dayjs("2024-02-13").isKoreanHoliday()).toBe(false);
     expect(dayjs("2024-10-10").isKoreanHoliday()).toBe(false); // 한글날(10/9 수)은 평일 → 대체 없음
   });
