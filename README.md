@@ -32,7 +32,7 @@ pnpm test:tz      # holidays-core 를 4개 시간대에서 재실행
 pnpm smoke        # 패킹된 tarball 을 임시 디렉터리에 설치해 ESM/CJS/zod v4 소비 확인
 ```
 
-공휴일 데이터 검증은 [`docs/verification-checklist.md`](docs/verification-checklist.md) 참고. `pnpm verify:holidays`는 `DATA_GO_KR_SERVICE_KEY` 환경변수(data.go.kr 「한국천문연구원_특일 정보」 일반 인증키)가 필요합니다.
+공휴일 데이터 검증은 [`docs/verification-checklist.md`](docs/verification-checklist.md) 참고. `pnpm fetch:holidays` / `pnpm verify:holidays`는 data.go.kr 「한국천문연구원_특일 정보」 인증키가 필요합니다 — `.env.example`을 `.env`로 복사해 `DATA_GO_KR_SERVICE_KEY`(일반 인증키 = **Decoding 키**)를 채우거나, 실행 시 환경변수로 넘기거나, CI는 GitHub Actions secret으로 등록하세요(`.env`는 .gitignore 됨).
 
 ## 라이선스
 
