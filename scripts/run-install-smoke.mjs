@@ -1,9 +1,9 @@
 // 발행 형태(tarball)를 임시 디렉터리에 설치해 ESM/CJS 소비자 시점에서 동작을 확인하고,
-// @kr-kit/zod 가 zod v4 와도 동작하는지 본다. (단위 테스트는 zod v3 로 돌린다.)
+// @hangukit/zod 가 zod v4 와도 동작하는지 본다. (단위 테스트는 zod v3 로 돌린다.)
 //
 // 워크스페이스 심볼릭 링크가 아니라 실제 tarball 을 설치하므로:
 //  - package.json 의 exports/files/main 누락을 잡고
-//  - @kr-kit/zod 가 "소비자가 설치한 zod"를 쓰는지(피어 의존성 해석) 정확히 검증한다.
+//  - @hangukit/zod 가 "소비자가 설치한 zod"를 쓰는지(피어 의존성 해석) 정확히 검증한다.
 
 import { spawnSync } from "node:child_process";
 import { cpSync, mkdirSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from "node:fs";
@@ -12,7 +12,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const PACKAGES = ["core-validate", "zod", "valibot", "holidays-core", "dayjs", "date-fns", "temporal"]; // @kr-kit/*
+const PACKAGES = ["core-validate", "zod", "valibot", "holidays-core", "dayjs", "date-fns", "temporal"]; // @hangukit/*
 
 function sh(label, cmd, opts = {}) {
   if (label) console.log(`\n── ${label} ──`);
@@ -20,7 +20,7 @@ function sh(label, cmd, opts = {}) {
   if (r.status !== 0) throw new Error(`명령 실패 (exit ${r.status}): ${cmd}`);
 }
 
-const work = mkdtempSync(join(tmpdir(), "kr-kit-smoke-"));
+const work = mkdtempSync(join(tmpdir(), "hangukit-smoke-"));
 const packDir = join(work, "tarballs");
 mkdirSync(packDir, { recursive: true });
 let failed = false;
@@ -36,11 +36,11 @@ try {
   const tarballs = {};
   for (const f of readdirSync(packDir)) {
     if (!f.endsWith(".tgz")) continue;
-    const m = f.match(/^kr-kit-(.+)-\d+\.\d+\.\d+.*\.tgz$/);
+    const m = f.match(/^hangukit-(.+)-\d+\.\d+\.\d+.*\.tgz$/);
     if (m) tarballs[m[1]] = join(packDir, f);
   }
   for (const p of PACKAGES) {
-    if (!tarballs[p]) throw new Error(`tarball 누락: @kr-kit/${p} (${packDir} 확인)`);
+    if (!tarballs[p]) throw new Error(`tarball 누락: @hangukit/${p} (${packDir} 확인)`);
   }
   const tgz = (p) => `"${tarballs[p]}"`;
 

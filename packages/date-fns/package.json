@@ -1,5 +1,5 @@
 {
-  "name": "@kr-kit/date-fns",
+  "name": "@hangukit/date-fns",
   "version": "0.1.0",
   "description": "한국 공휴일·영업일·KRX 휴장일 헬퍼 — Date 인/아웃 (date-fns 와 함께 쓰는 사이드카)",
   "license": "MIT",
@@ -39,7 +39,7 @@
     "krx"
   ],
   "dependencies": {
-    "@kr-kit/holidays-core": "workspace:^"
+    "@hangukit/holidays-core": "workspace:^"
   },
   "peerDependencies": {
     "date-fns": "^3.0.0 || ^4.0.0"

@@ -1,4 +1,4 @@
-import type { HolidayEntry } from "@kr-kit/holidays-core";
+import type { HolidayEntry } from "@hangukit/holidays-core";
 import { expectTypeOf } from "expect-type";
 import {
   addKoreanBusinessDays,

@@ -8,7 +8,7 @@ import {
   isRrnLike,
   isValidRrnFormat,
   type KoreanNameOptions,
-} from "@kr-kit/core-validate";
+} from "@hangukit/core-validate";
 import { z } from "zod";
 
 // `.refine()`의 시그니처는 zod v3·v4에서 동일하므로, 여기서 만든 스키마는 두 버전 모두에서
@@ -42,7 +42,7 @@ export const postalCode = () =>
  * 주민등록번호 **형식**(+ 구 체크섬) 스키마.
  *
  * ⚠️ 검증에 통과한 주민등록번호를 로그·DB에 저장하지 마세요. 표시가 필요하면
- * `@kr-kit/core-validate`의 `maskRrn`를 쓰세요. 신규 발급분(2020-10~)까지 받아야 한다면
+ * `@hangukit/core-validate`의 `maskRrn`를 쓰세요. 신규 발급분(2020-10~)까지 받아야 한다면
  * 체크섬을 검사하지 않는 `rrnLike()`를 사용하세요.
  */
 export const rrnFormat = () =>

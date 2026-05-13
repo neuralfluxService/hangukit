@@ -2,6 +2,6 @@
   "name": "smoke-test",
   "version": "0.0.0",
   "private": true,
-  "description": "@kr-kit/* 가 ESM/CJS 소비자에서 동작하는지 확인하는 스모크 소스. 실행은 scripts/run-install-smoke.mjs 가 패킹된 tarball 을 임시 디렉터리에 설치해 돌린다.",
+  "description": "@hangukit/* 가 ESM/CJS 소비자에서 동작하는지 확인하는 스모크 소스. 실행은 scripts/run-install-smoke.mjs 가 패킹된 tarball 을 임시 디렉터리에 설치해 돌린다.",
   "type": "module"
 }

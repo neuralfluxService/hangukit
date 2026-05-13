@@ -1,7 +1,7 @@
 {
-  "name": "@kr-kit/dayjs",
+  "name": "@hangukit/dayjs",
   "version": "0.1.0",
-  "description": "@kr-kit/holidays-core의 dayjs 플러그인 — dayjs().isKoreanHoliday(), dayjs().addBusinessDays(n) 등",
+  "description": "@hangukit/holidays-core의 dayjs 플러그인 — dayjs().isKoreanHoliday(), dayjs().addBusinessDays(n) 등",
   "license": "MIT",
   "type": "module",
   "sideEffects": false,
@@ -38,7 +38,7 @@
     "영업일"
   ],
   "dependencies": {
-    "@kr-kit/holidays-core": "workspace:^"
+    "@hangukit/holidays-core": "workspace:^"
   },
   "peerDependencies": {
     "dayjs": "^1.11.0"

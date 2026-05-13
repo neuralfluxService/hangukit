@@ -1,6 +1,6 @@
-# kr-kit 공휴일 데이터 수동 검증 체크리스트
+# hangukit 공휴일 데이터 수동 검증 체크리스트
 
-`@kr-kit/holidays-core`의 `src/holidays-data.ts`는 손으로 시드된 부분이 있다. publish 전, 그리고 데이터를 갱신할 때마다 아래를 사람이 한 번 확인한다.
+`@hangukit/holidays-core`의 `src/holidays-data.ts`는 손으로 시드된 부분이 있다. publish 전, 그리고 데이터를 갱신할 때마다 아래를 사람이 한 번 확인한다.
 
 ## 자동 검증 (먼저)
 

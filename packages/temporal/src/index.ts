@@ -10,14 +10,14 @@ import {
   nearestBusinessDayForward as coreNearestForward,
   type BusinessDayOptions,
   type HolidayEntry,
-} from "@kr-kit/holidays-core";
+} from "@hangukit/holidays-core";
 import { Temporal } from "@js-temporal/polyfill";
 
 export type { HolidayEntry };
 
 type PlainDate = Temporal.PlainDate;
 
-// Temporal.PlainDate 는 시간대 없는 달력 날짜라 @kr-kit/holidays-core 모델과 정확히 일치한다.
+// Temporal.PlainDate 는 시간대 없는 달력 날짜라 @hangukit/holidays-core 모델과 정확히 일치한다.
 // PlainDate#toString() 은 항상 ISO 날짜("YYYY-MM-DD")를 앞에 두고, 비-ISO 달력이면 "[u-ca=...]" 만
 // 뒤에 붙으므로 앞 10자가 곧 ISO 날짜다.
 const toYmd = (date: PlainDate): string => date.toString().slice(0, 10);

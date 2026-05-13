@@ -1,5 +1,5 @@
 {
-  "name": "@kr-kit/temporal",
+  "name": "@hangukit/temporal",
   "version": "0.1.0",
   "description": "한국 공휴일·영업일·KRX 휴장일 헬퍼 — Temporal.PlainDate 인/아웃",
   "license": "MIT",
@@ -39,7 +39,7 @@
     "krx"
   ],
   "dependencies": {
-    "@kr-kit/holidays-core": "workspace:^"
+    "@hangukit/holidays-core": "workspace:^"
   },
   "peerDependencies": {
     "@js-temporal/polyfill": "^0.4.4 || ^0.5.0"

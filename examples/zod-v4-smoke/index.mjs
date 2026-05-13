@@ -1,4 +1,4 @@
-// @kr-kit/zod 의 스키마 헬퍼가 zod v4 에서도 동작하는지 확인.
+// @hangukit/zod 의 스키마 헬퍼가 zod v4 에서도 동작하는지 확인.
 import assert from "node:assert/strict";
 import { z } from "zod";
 import {
@@ -8,7 +8,7 @@ import {
   koreanName,
   postalCode,
   rrnFormat,
-} from "@kr-kit/zod";
+} from "@hangukit/zod";
 
 assert.equal(brn().safeParse("124-81-00998").success, true);
 assert.equal(brn().safeParse("124-81-00997").success, false);

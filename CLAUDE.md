@@ -1,6 +1,6 @@
-# kr-kit — 작업 지침
+# hangukit — 작업 지침
 
-한국 환경 사이드카 npm 패키지 모노레포. **선점 패키지를 대체하지 않고 어댑터로 얹혀가는** 것이 핵심 전략.
+한국 환경 사이드카 npm 패키지 모노레포 (npm 스코프 `@hangukit/*`, 저장소 디렉터리는 `kr-kit`). **선점 패키지를 대체하지 않고 어댑터로 얹혀가는** 것이 핵심 전략.
 
 ## 구조
 - pnpm workspaces + Turborepo. 빌드 `tsup`(ESM+CJS+d.ts), 테스트 `vitest`, 릴리스 `changesets`.

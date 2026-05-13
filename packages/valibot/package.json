@@ -1,7 +1,7 @@
 {
-  "name": "@kr-kit/valibot",
+  "name": "@hangukit/valibot",
   "version": "0.1.0",
-  "description": "@kr-kit/core-validate의 valibot 어댑터 — v.pipe(v.string(), brn()) 같은 검증 액션 헬퍼",
+  "description": "@hangukit/core-validate의 valibot 어댑터 — v.pipe(v.string(), brn()) 같은 검증 액션 헬퍼",
   "license": "MIT",
   "type": "module",
   "sideEffects": false,
@@ -36,7 +36,7 @@
     "사업자등록번호"
   ],
   "dependencies": {
-    "@kr-kit/core-validate": "workspace:^"
+    "@hangukit/core-validate": "workspace:^"
   },
   "peerDependencies": {
     "valibot": "^1.0.0"

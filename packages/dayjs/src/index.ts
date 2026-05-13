@@ -7,7 +7,7 @@ import {
   isKrxBusinessDay as coreIsKrxBusinessDay,
   isKrxHoliday as coreIsKrxHoliday,
   type HolidayEntry,
-} from "@kr-kit/holidays-core";
+} from "@hangukit/holidays-core";
 import type { PluginFunc } from "dayjs";
 
 declare module "dayjs" {
@@ -15,7 +15,7 @@ declare module "dayjs" {
     /** 관공서 공휴일(대체·임시공휴일·선거일 포함)인가. 토·일 자체는 제외. */
     isKoreanHoliday(): boolean;
     /** 이 날짜에 해당하는 공휴일 엔트리들(겹치는 날은 여러 개). */
-    koreanHolidays(): readonly import("@kr-kit/holidays-core").HolidayEntry[];
+    koreanHolidays(): readonly import("@hangukit/holidays-core").HolidayEntry[];
     /** 영업일(토·일·공휴일이 아님)인가. */
     isKoreanBusinessDay(): boolean;
     /** `n` 영업일 뒤(`n<0`이면 앞)의 날짜. */

@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { getHolidays } from "../src/index";
 
 // 독립 레퍼런스: @hyunbinseo/holidays-kr ("based on the official gazette", 2018~2026 커버).
-// kr-kit의 hand-seed 데이터(2021~2026)가 이것과 날짜 집합이 일치하는지 확인한다.
+// @hangukit/holidays-core 의 hand-seed 데이터(2021~2026)가 이것과 날짜 집합이 일치하는지 확인한다.
 // (이름은 패키지마다 표기가 달라 비교하지 않고, 날짜 집합만 비교한다.)
 const REFERENCE: Record<number, Readonly<Record<string, readonly string[]>>> = {
   2021: y2021,

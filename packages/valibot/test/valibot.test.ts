@@ -14,7 +14,7 @@ import {
 const ok = <S extends v.GenericSchema>(schema: S, input: unknown): boolean =>
   v.safeParse(schema, input).success;
 
-describe("@kr-kit/valibot — 검증 액션", () => {
+describe("@hangukit/valibot — 검증 액션", () => {
   it("brn — 사업자등록번호 (124-81-00998 = 한국전력공사)", () => {
     const Schema = v.pipe(v.string(), brn());
     expect(ok(Schema, "124-81-00998")).toBe(true);

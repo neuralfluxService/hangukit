@@ -28,15 +28,15 @@ jobs:
         run: |
           set -e
           for p in core-validate zod valibot holidays-core dayjs date-fns temporal; do
-            pnpm --filter "@kr-kit/$p" exec publint
+            pnpm --filter "@hangukit/$p" exec publint
           done
       - name: are-the-types-wrong (node16 profile)
         run: |
           set -e
           for p in core-validate zod valibot holidays-core date-fns temporal; do
-            pnpm --filter "@kr-kit/$p" exec attw --pack . --profile node16
+            pnpm --filter "@hangukit/$p" exec attw --pack . --profile node16
           done
-          # @kr-kit/dayjs: tsup 가 default export → CJS 는 `module.exports = fn` 로 나와 런타임은 정상이지만
+          # @hangukit/dayjs: tsup 가 default export → CJS 는 `module.exports = fn` 로 나와 런타임은 정상이지만
           # .d.cts 가 `export default` 라 attw 가 FalseExportDefault 로 지적함. esModuleInterop 환경에서 동작하므로 경고만.
-          pnpm --filter "@kr-kit/dayjs" exec attw --pack . --profile node16 \
-            || echo "::warning::@kr-kit/dayjs attw FalseExportDefault — cosmetic (runtime require/import 정상)"
+          pnpm --filter "@hangukit/dayjs" exec attw --pack . --profile node16 \
+            || echo "::warning::@hangukit/dayjs attw FalseExportDefault — cosmetic (runtime require/import 정상)"

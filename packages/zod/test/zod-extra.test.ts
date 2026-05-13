@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { koreanName, koreanPhone, postalCode, rrnLike } from "../src/index";
 
-describe("@kr-kit/zod — 나머지 스키마", () => {
+describe("@hangukit/zod — 나머지 스키마", () => {
   it("koreanPhone()", () => {
     expect(koreanPhone().safeParse("02-123-4567").success).toBe(true);
     expect(koreanPhone().safeParse("1588-1234").success).toBe(true);

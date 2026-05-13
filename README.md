@@ -1,28 +1,30 @@
-# kr-kit
+# hangukit
 
 한국 환경 사이드카(side-car) 패키지 모음. 글로벌 표준 라이브러리(`zod`, `dayjs`, `date-fns` …)를 **대체하지 않고 옆에 붙어** 한국 특수 요구를 채웁니다.
 
+> npm 스코프는 `@hangukit/*`. 저장소 디렉터리는 `kr-kit` 으로 시작했으나 npm `@kr-kit` org 가 이미 점유돼 있어 스코프를 `@hangukit` 으로 정했습니다.
+
 ## 패키지
 
-**검증 (`@kr-kit/core-validate` 위)**
+**검증 (`@hangukit/core-validate` 위)**
 
 | 패키지 | 설명 | 번들(ESM, 압축 전) | 상태 |
 | --- | --- | --- | --- |
-| [`@kr-kit/core-validate`](packages/core-validate) | 의존성 0. 사업자등록번호·법인등록번호·휴대폰·한글이름·계좌번호·우편번호 검증/포맷, 주민번호 마스킹 | ~8 KB | ✅ |
-| [`@kr-kit/zod`](packages/zod) | `@kr-kit/core-validate`의 zod(v3·v4) 어댑터 — `z.string().pipe(brn())` | ~2 KB | ✅ |
-| [`@kr-kit/valibot`](packages/valibot) | `@kr-kit/core-validate`의 valibot(v1) 어댑터 — `v.pipe(v.string(), brn())` | ~2 KB | ✅ |
+| [`@hangukit/core-validate`](packages/core-validate) | 의존성 0. 사업자등록번호·법인등록번호·휴대폰·한글이름·계좌번호·우편번호 검증/포맷, 주민번호 마스킹 | ~8 KB | ✅ |
+| [`@hangukit/zod`](packages/zod) | `@hangukit/core-validate`의 zod(v3·v4) 어댑터 — `z.string().pipe(brn())` | ~2 KB | ✅ |
+| [`@hangukit/valibot`](packages/valibot) | `@hangukit/core-validate`의 valibot(v1) 어댑터 — `v.pipe(v.string(), brn())` | ~2 KB | ✅ |
 
-**공휴일·영업일 (`@kr-kit/holidays-core` 위)**
+**공휴일·영업일 (`@hangukit/holidays-core` 위)**
 
 | 패키지 | 설명 | 번들(ESM, 압축 전) | 상태 |
 | --- | --- | --- | --- |
-| [`@kr-kit/holidays-core`](packages/holidays-core) | 의존성 0·런타임 네트워크 호출 없음. 공휴일·대체공휴일·임시공휴일 데이터(2021~2026) + 영업일 산술 + KRX 휴장일 — `YYYY-MM-DD` 문자열/`Date` 인 | ~13 KB(데이터 포함) | ✅ |
-| [`@kr-kit/dayjs`](packages/dayjs) | `@kr-kit/holidays-core`의 dayjs 플러그인 — `dayjs().isKoreanHoliday()`, `.addBusinessDays(3)` | ~2 KB | ✅ |
-| [`@kr-kit/date-fns`](packages/date-fns) | `@kr-kit/holidays-core`를 `Date` 인/아웃으로 — date-fns 와 함께 쓰는 사이드카 (`date-fns` peerDep) | ~2 KB | ✅ |
-| [`@kr-kit/temporal`](packages/temporal) | `@kr-kit/holidays-core`를 `Temporal.PlainDate` 인/아웃으로 (`@js-temporal/polyfill` peerDep) | ~2 KB | ✅ |
+| [`@hangukit/holidays-core`](packages/holidays-core) | 의존성 0·런타임 네트워크 호출 없음. 공휴일·대체공휴일·임시공휴일 데이터(2021~2026) + 영업일 산술 + KRX 휴장일 — `YYYY-MM-DD` 문자열/`Date` 인 | ~13 KB(데이터 포함) | ✅ |
+| [`@hangukit/dayjs`](packages/dayjs) | `@hangukit/holidays-core`의 dayjs 플러그인 — `dayjs().isKoreanHoliday()`, `.addBusinessDays(3)` | ~2 KB | ✅ |
+| [`@hangukit/date-fns`](packages/date-fns) | `@hangukit/holidays-core`를 `Date` 인/아웃으로 — date-fns 와 함께 쓰는 사이드카 (`date-fns` peerDep) | ~2 KB | ✅ |
+| [`@hangukit/temporal`](packages/temporal) | `@hangukit/holidays-core`를 `Temporal.PlainDate` 인/아웃으로 (`@js-temporal/polyfill` peerDep) | ~2 KB | ✅ |
 
-> `@kr-kit/dayjs`는 ESM/CJS 둘 다 제공합니다. CJS 빌드는 `module.exports = plugin`(즉 `require("@kr-kit/dayjs")`가 곧 플러그인 함수)이며, 타입 선언은 `export default`라 [`@arethetypeswrong`](https://arethetypeswrong.github.io/)이 `FalseExportDefault`로 표시하지만 `esModuleInterop` 환경에서는 정상 동작합니다.
-> `@kr-kit/temporal`은 네이티브 `Temporal`이 표준이 되기 전까지는 `@js-temporal/polyfill`이 런타임·타입 출처입니다(peerDependency).
+> `@hangukit/dayjs`는 ESM/CJS 둘 다 제공합니다. CJS 빌드는 `module.exports = plugin`(즉 `require("@hangukit/dayjs")`가 곧 플러그인 함수)이며, 타입 선언은 `export default`라 [`@arethetypeswrong`](https://arethetypeswrong.github.io/)이 `FalseExportDefault`로 표시하지만 `esModuleInterop` 환경에서는 정상 동작합니다.
+> `@hangukit/temporal`은 네이티브 `Temporal`이 표준이 되기 전까지는 `@js-temporal/polyfill`이 런타임·타입 출처입니다(peerDependency).
 
 ## 설계 원칙
 

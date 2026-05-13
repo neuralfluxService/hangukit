@@ -18,7 +18,7 @@ import {
 const d = (y: number, m1to12: number, day: number): Date => new Date(y, m1to12 - 1, day);
 const ymd = (date: Date): string => format(date, "yyyy-MM-dd");
 
-describe("@kr-kit/date-fns — Date 기반 헬퍼", () => {
+describe("@hangukit/date-fns — Date 기반 헬퍼", () => {
   it("isKoreanHoliday / koreanHolidaysOf", () => {
     expect(isKoreanHoliday(d(2024, 2, 12))).toBe(true); // 설날 대체공휴일
     expect(isKoreanHoliday(d(2024, 2, 13))).toBe(false);

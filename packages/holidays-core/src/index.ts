@@ -79,7 +79,7 @@ function warnUncovered(year: number): void {
   warnedYears.add(year);
   const years = coveredYears();
   console.warn(
-    `[@kr-kit/holidays-core] ${year}년 공휴일 데이터가 없습니다(보유: ${years[0]}~${years[years.length - 1]}). \`pnpm fetch:holidays\`로 갱신하세요.`,
+    `[@hangukit/holidays-core] ${year}년 공휴일 데이터가 없습니다(보유: ${years[0]}~${years[years.length - 1]}). \`pnpm fetch:holidays\`로 갱신하세요.`,
   );
 }
 

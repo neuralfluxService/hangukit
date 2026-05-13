@@ -1,16 +1,16 @@
-// ESM 소비자 시점에서 @kr-kit/* 7개가 정상 동작하는지 확인.
+// ESM 소비자 시점에서 @hangukit/* 7개가 정상 동작하는지 확인.
 import assert from "node:assert/strict";
 import { Temporal } from "@js-temporal/polyfill";
 import dayjs from "dayjs";
 import { format } from "date-fns";
 import * as v from "valibot";
-import { isBrn, maskRrn } from "@kr-kit/core-validate";
-import { addKoreanBusinessDays as dfAddBusinessDays, isKoreanHoliday as dfIsHoliday } from "@kr-kit/date-fns";
-import koreaHolidays from "@kr-kit/dayjs";
-import { addBusinessDays, isHoliday } from "@kr-kit/holidays-core";
-import { addKoreanBusinessDays as tAddBusinessDays, isKoreanHoliday as tIsHoliday } from "@kr-kit/temporal";
-import { brn as vbrn } from "@kr-kit/valibot";
-import { brn, koreanMobile } from "@kr-kit/zod";
+import { isBrn, maskRrn } from "@hangukit/core-validate";
+import { addKoreanBusinessDays as dfAddBusinessDays, isKoreanHoliday as dfIsHoliday } from "@hangukit/date-fns";
+import koreaHolidays from "@hangukit/dayjs";
+import { addBusinessDays, isHoliday } from "@hangukit/holidays-core";
+import { addKoreanBusinessDays as tAddBusinessDays, isKoreanHoliday as tIsHoliday } from "@hangukit/temporal";
+import { brn as vbrn } from "@hangukit/valibot";
+import { brn, koreanMobile } from "@hangukit/zod";
 
 // core-validate
 assert.equal(isBrn("124-81-00998"), true);

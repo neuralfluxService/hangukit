@@ -9,7 +9,7 @@ import {
   rrnFormat,
 } from "../src/index";
 
-describe("@kr-kit/zod 스키마 헬퍼", () => {
+describe("@hangukit/zod 스키마 헬퍼", () => {
   it("brn() — 사업자등록번호 스키마", () => {
     const schema = brn();
     expect(schema.safeParse("124-81-00998").success).toBe(true);

@@ -10,12 +10,12 @@ import {
   nearestBusinessDayForward as coreNearestForward,
   type BusinessDayOptions,
   type HolidayEntry,
-} from "@kr-kit/holidays-core";
+} from "@hangukit/holidays-core";
 import { format, parseISO } from "date-fns";
 
 export type { HolidayEntry };
 
-// Date 의 로컬 날짜 구성요소를 쓴다(= @kr-kit/holidays-core 의 toYmd(Date) 동작과 일치).
+// Date 의 로컬 날짜 구성요소를 쓴다(= @hangukit/holidays-core 의 toYmd(Date) 동작과 일치).
 // 즉 사용자가 보는 그 날짜로 동작하며, `new Date("2024-02-12")` 같은 UTC 자정 입력은 시간대에 따라
 // 하루 밀릴 수 있으니 date-fns 의 parseISO 등으로 로컬 날짜를 만들어 넘기세요.
 const toYmd = (date: Date): string => format(date, "yyyy-MM-dd");

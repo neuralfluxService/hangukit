@@ -17,7 +17,7 @@ import {
 
 const pd = (s: string): Temporal.PlainDate => Temporal.PlainDate.from(s);
 
-describe("@kr-kit/temporal — Temporal.PlainDate 기반 헬퍼", () => {
+describe("@hangukit/temporal — Temporal.PlainDate 기반 헬퍼", () => {
   it("isKoreanHoliday / koreanHolidaysOf", () => {
     expect(isKoreanHoliday(pd("2024-02-12"))).toBe(true); // 설날 대체공휴일
     expect(isKoreanHoliday(pd("2024-02-13"))).toBe(false);

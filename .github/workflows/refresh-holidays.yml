@@ -22,7 +22,7 @@ jobs:
         env:
           DATA_GO_KR_SERVICE_KEY: ${{ secrets.DATA_GO_KR_SERVICE_KEY }}
         run: pnpm fetch:holidays
-      - run: pnpm --filter "@kr-kit/holidays-core" build && pnpm --filter "@kr-kit/holidays-core" test
+      - run: pnpm --filter "@hangukit/holidays-core" build && pnpm --filter "@hangukit/holidays-core" test
       - uses: peter-evans/create-pull-request@v7
         with:
           branch: chore/refresh-holidays

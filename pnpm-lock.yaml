@@ -65,7 +65,7 @@ importers:
 
   packages/date-fns:
     dependencies:
-      '@kr-kit/holidays-core':
+      '@hangukit/holidays-core':
         specifier: workspace:^
         version: link:../holidays-core
     devDependencies:
@@ -75,7 +75,7 @@ importers:
 
   packages/dayjs:
     dependencies:
-      '@kr-kit/holidays-core':
+      '@hangukit/holidays-core':
         specifier: workspace:^
         version: link:../holidays-core
     devDependencies:
@@ -87,7 +87,7 @@ importers:
 
   packages/temporal:
     dependencies:
-      '@kr-kit/holidays-core':
+      '@hangukit/holidays-core':
         specifier: workspace:^
         version: link:../holidays-core
     devDependencies:
@@ -97,7 +97,7 @@ importers:
 
   packages/valibot:
     dependencies:
-      '@kr-kit/core-validate':
+      '@hangukit/core-validate':
         specifier: workspace:^
         version: link:../core-validate
     devDependencies:
@@ -107,7 +107,7 @@ importers:
 
   packages/zod:
     dependencies:
-      '@kr-kit/core-validate':
+      '@hangukit/core-validate':
         specifier: workspace:^
         version: link:../core-validate
     devDependencies:

@@ -6,7 +6,7 @@ beforeAll(() => {
   dayjs.extend(koreaHolidays);
 });
 
-describe("@kr-kit/dayjs 플러그인", () => {
+describe("@hangukit/dayjs 플러그인", () => {
   it("isKoreanHoliday — 법정/대체/임시공휴일", () => {
     expect(dayjs("2024-02-12").isKoreanHoliday()).toBe(true); // 설날 대체공휴일
     expect(dayjs("2023-05-29").isKoreanHoliday()).toBe(true); // 부처님오신날 대체공휴일
