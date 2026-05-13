@@ -12,7 +12,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const PACKAGES = ["core-validate", "zod", "holidays-core", "dayjs"]; // @kr-kit/*
+const PACKAGES = ["core-validate", "zod", "valibot", "holidays-core", "dayjs", "date-fns", "temporal"]; // @kr-kit/*
 
 function sh(label, cmd, opts = {}) {
   if (label) console.log(`\n── ${label} ──`);
@@ -54,8 +54,10 @@ try {
   cpSync(join(root, "examples/smoke-test/esm.mjs"), join(dirA, "esm.mjs"));
   cpSync(join(root, "examples/smoke-test/cjs.cjs"), join(dirA, "cjs.cjs"));
   sh(
-    "소비자 A 설치 (tarball + zod@3 + dayjs)",
-    `npm install --no-audit --no-fund --loglevel=error ${tgz("core-validate")} ${tgz("holidays-core")} ${tgz("zod")} ${tgz("dayjs")} "zod@^3.24.1" "dayjs@^1.11.13"`,
+    "소비자 A 설치 (tarball 7개 + zod@3 · valibot@1 · dayjs · date-fns@4 · @js-temporal/polyfill)",
+    `npm install --no-audit --no-fund --loglevel=error ` +
+      `${tgz("core-validate")} ${tgz("zod")} ${tgz("valibot")} ${tgz("holidays-core")} ${tgz("dayjs")} ${tgz("date-fns")} ${tgz("temporal")} ` +
+      `"zod@^3.24.1" "valibot@^1.4.0" "dayjs@^1.11.13" "date-fns@^4.1.0" "@js-temporal/polyfill@^0.5.1"`,
     { cwd: dirA },
   );
   sh("소비자 A: ESM", "node esm.mjs", { cwd: dirA });

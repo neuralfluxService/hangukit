@@ -4,10 +4,14 @@
 
 ## 구조
 - pnpm workspaces + Turborepo. 빌드 `tsup`(ESM+CJS+d.ts), 테스트 `vitest`, 릴리스 `changesets`.
-- `packages/core-validate` — 의존성 0. 한국 식별자 검증/포맷/마스킹.
-- `packages/zod` — `core-validate`의 zod 어댑터. `zod`는 peerDependency. 단위 테스트는 zod v3, v4는 `scripts/run-install-smoke.mjs`가 검증.
-- `packages/holidays-core` — 의존성 0. 공휴일 데이터(`src/holidays-data.ts`, 2021~2026) + 영업일 산술 + KRX 휴장일.
-- `packages/dayjs` — `holidays-core`의 dayjs 플러그인. `dayjs`는 peerDependency.
+- 코어 2개 (의존성 0):
+  - `packages/core-validate` — 한국 식별자 검증/포맷/마스킹.
+  - `packages/holidays-core` — 공휴일 데이터(`src/holidays-data.ts`, 2021~2026) + 영업일 산술 + KRX 휴장일. `YYYY-MM-DD` 문자열/`Date` 인.
+- 어댑터 (얇은 래퍼, 각자 peerDependency):
+  - `packages/zod`, `packages/valibot` — `core-validate` 위. zod(v3·v4)·valibot(v1). zod 단위 테스트는 v3, v4는 `scripts/run-install-smoke.mjs`가 검증.
+  - `packages/dayjs` — `holidays-core` 위. dayjs 플러그인(`dayjs.extend`).
+  - `packages/date-fns` — `holidays-core` 위. `Date` 인/아웃 (`date-fns`의 `format`/`parseISO`로 변환). 이름은 date-fns 와 함께 쓰는 사이드카 표시지만 핵심은 `Date` 시그니처.
+  - `packages/temporal` — `holidays-core` 위. `Temporal.PlainDate` 인/아웃 (`@js-temporal/polyfill`이 런타임·타입 출처).
 - `examples/smoke-test`, `examples/zod-v4-smoke` — 스모크용 소스만 (실행은 `pnpm smoke` = tarball 설치 후).
 
 ## 규칙

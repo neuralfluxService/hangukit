@@ -27,13 +27,13 @@ jobs:
       - name: publint
         run: |
           set -e
-          for p in core-validate zod holidays-core dayjs; do
+          for p in core-validate zod valibot holidays-core dayjs date-fns temporal; do
             pnpm --filter "@kr-kit/$p" exec publint
           done
       - name: are-the-types-wrong (node16 profile)
         run: |
           set -e
-          for p in core-validate zod holidays-core; do
+          for p in core-validate zod valibot holidays-core date-fns temporal; do
             pnpm --filter "@kr-kit/$p" exec attw --pack . --profile node16
           done
           # @kr-kit/dayjs: tsup 가 default export → CJS 는 `module.exports = fn` 로 나와 런타임은 정상이지만

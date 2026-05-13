@@ -1,0 +1,53 @@
+{
+  "name": "@kr-kit/temporal",
+  "version": "0.1.0",
+  "description": "한국 공휴일·영업일·KRX 휴장일 헬퍼 — Temporal.PlainDate 인/아웃",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "korea",
+    "korean",
+    "temporal",
+    "holidays",
+    "공휴일",
+    "영업일",
+    "business-day",
+    "krx"
+  ],
+  "dependencies": {
+    "@kr-kit/holidays-core": "workspace:^"
+  },
+  "peerDependencies": {
+    "@js-temporal/polyfill": "^0.4.4 || ^0.5.0"
+  },
+  "devDependencies": {
+    "@js-temporal/polyfill": "^0.5.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

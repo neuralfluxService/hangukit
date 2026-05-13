@@ -1,0 +1,53 @@
+{
+  "name": "@kr-kit/date-fns",
+  "version": "0.1.0",
+  "description": "한국 공휴일·영업일·KRX 휴장일 헬퍼 — Date 인/아웃 (date-fns 와 함께 쓰는 사이드카)",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "korea",
+    "korean",
+    "date-fns",
+    "holidays",
+    "공휴일",
+    "영업일",
+    "business-day",
+    "krx"
+  ],
+  "dependencies": {
+    "@kr-kit/holidays-core": "workspace:^"
+  },
+  "peerDependencies": {
+    "date-fns": "^3.0.0 || ^4.0.0"
+  },
+  "devDependencies": {
+    "date-fns": "^4.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

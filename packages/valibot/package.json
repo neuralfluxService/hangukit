@@ -1,0 +1,50 @@
+{
+  "name": "@kr-kit/valibot",
+  "version": "0.1.0",
+  "description": "@kr-kit/core-validate의 valibot 어댑터 — v.pipe(v.string(), brn()) 같은 검증 액션 헬퍼",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "korea",
+    "korean",
+    "valibot",
+    "validation",
+    "사업자등록번호"
+  ],
+  "dependencies": {
+    "@kr-kit/core-validate": "workspace:^"
+  },
+  "peerDependencies": {
+    "valibot": "^1.0.0"
+  },
+  "devDependencies": {
+    "valibot": "^1.4.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
