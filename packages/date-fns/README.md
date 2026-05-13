@@ -2,6 +2,9 @@
 
 > [`@hangukit/holidays-core`](../holidays-core)를 `Date` 인/아웃으로 노출 ([date-fns](https://date-fns.org/) 와 함께 쓰는 사이드카) · `Date`-in/`Date`-out wrapper around `@hangukit/holidays-core`, designed to sit alongside date-fns
 
+[![npm](https://img.shields.io/npm/v/@hangukit/date-fns?label=npm)](https://www.npmjs.com/package/@hangukit/date-fns)
+[![license](https://img.shields.io/npm/l/@hangukit/date-fns)](../../LICENSE)
+
 [한국어](#한국어) · [English](#english)
 
 ---

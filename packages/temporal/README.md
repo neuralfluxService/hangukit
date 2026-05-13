@@ -2,6 +2,9 @@
 
 > [`@hangukit/holidays-core`](../holidays-core)를 [`Temporal.PlainDate`](https://tc39.es/proposal-temporal/docs/plaindate.html) 인/아웃으로 노출 · `Temporal.PlainDate` in/out wrapper around `@hangukit/holidays-core`
 
+[![npm](https://img.shields.io/npm/v/@hangukit/temporal?label=npm)](https://www.npmjs.com/package/@hangukit/temporal)
+[![license](https://img.shields.io/npm/l/@hangukit/temporal)](../../LICENSE)
+
 [한국어](#한국어) · [English](#english)
 
 ---

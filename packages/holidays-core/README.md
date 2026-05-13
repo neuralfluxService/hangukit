@@ -2,6 +2,9 @@
 
 > 한국 공휴일·대체공휴일·임시공휴일 데이터 + 영업일 산술 + KRX 휴장일 (의존성 0, 런타임 네트워크 호출 없음) · Korean public holidays + business-day arithmetic + KRX market closures (zero deps, no runtime network calls)
 
+[![npm](https://img.shields.io/npm/v/@hangukit/holidays-core?label=npm)](https://www.npmjs.com/package/@hangukit/holidays-core)
+[![license](https://img.shields.io/npm/l/@hangukit/holidays-core)](../../LICENSE)
+
 [한국어](#한국어) · [English](#english)
 
 ---

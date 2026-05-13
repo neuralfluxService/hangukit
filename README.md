@@ -2,6 +2,11 @@
 
 > 한국 환경 사이드카(side-car) 패키지 모음 · A collection of side-car npm packages for the Korean environment
 
+[![npm: core-validate](https://img.shields.io/npm/v/@hangukit/core-validate?label=%40hangukit%2Fcore-validate)](https://www.npmjs.com/package/@hangukit/core-validate)
+[![npm: holidays-core](https://img.shields.io/npm/v/@hangukit/holidays-core?label=%40hangukit%2Fholidays-core)](https://www.npmjs.com/package/@hangukit/holidays-core)
+[![CI](https://github.com/neuralfluxService/hangukit/actions/workflows/ci.yml/badge.svg)](https://github.com/neuralfluxService/hangukit/actions/workflows/ci.yml)
+[![license](https://img.shields.io/npm/l/@hangukit/core-validate)](LICENSE)
+
 [한국어](#한국어) · [English](#english)
 
 > npm 스코프는 `@hangukit/*`. 저장소 디렉터리는 `kr-kit` 으로 시작했으나 npm `@kr-kit` org 가 이미 점유돼 있어 스코프를 `@hangukit` 으로 정했습니다.

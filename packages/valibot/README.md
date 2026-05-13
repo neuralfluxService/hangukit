@@ -2,6 +2,9 @@
 
 > [`@hangukit/core-validate`](../core-validate)의 [valibot](https://valibot.dev) (v1) 어댑터 · valibot (v1) adapter for `@hangukit/core-validate`
 
+[![npm](https://img.shields.io/npm/v/@hangukit/valibot?label=npm)](https://www.npmjs.com/package/@hangukit/valibot)
+[![license](https://img.shields.io/npm/l/@hangukit/valibot)](../../LICENSE)
+
 [한국어](#한국어) · [English](#english)
 
 ---

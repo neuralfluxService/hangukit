@@ -2,6 +2,9 @@
 
 > 한국 식별자 검증·포맷·마스킹 (의존성 0) · Korean identifier validation, formatting & masking (zero deps)
 
+[![npm](https://img.shields.io/npm/v/@hangukit/core-validate?label=npm)](https://www.npmjs.com/package/@hangukit/core-validate)
+[![license](https://img.shields.io/npm/l/@hangukit/core-validate)](../../LICENSE)
+
 [한국어](#한국어) · [English](#english)
 
 ---

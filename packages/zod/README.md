@@ -2,6 +2,9 @@
 
 > [`@hangukit/core-validate`](../core-validate)의 [zod](https://zod.dev) (v3·v4) 어댑터 · zod (v3·v4) adapter for `@hangukit/core-validate`
 
+[![npm](https://img.shields.io/npm/v/@hangukit/zod?label=npm)](https://www.npmjs.com/package/@hangukit/zod)
+[![license](https://img.shields.io/npm/l/@hangukit/zod)](../../LICENSE)
+
 [한국어](#한국어) · [English](#english)
 
 ---

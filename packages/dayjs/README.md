@@ -2,6 +2,9 @@
 
 > [`@hangukit/holidays-core`](../holidays-core)의 [dayjs](https://day.js.org/) 플러그인 — `dayjs().isKoreanHoliday()` · dayjs plugin for `@hangukit/holidays-core` — `dayjs().isKoreanHoliday()`
 
+[![npm](https://img.shields.io/npm/v/@hangukit/dayjs?label=npm)](https://www.npmjs.com/package/@hangukit/dayjs)
+[![license](https://img.shields.io/npm/l/@hangukit/dayjs)](../../LICENSE)
+
 [한국어](#한국어) · [English](#english)
 
 ---
