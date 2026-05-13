@@ -144,9 +144,11 @@ describe("한국거래소(KRX) 휴장일", () => {
     expect(isKrxBusinessDay("2024-12-30")).toBe(true); // 마지막 거래일
   });
 
-  it("근로자의날 5/1은 KRX 휴장이지만 관공서 공휴일은 아니다", () => {
+  it("근로자의날 5/1 — 2025년까지는 KRX 휴장이지만 관공서 공휴일 아님, 2026년부터는 공휴일", () => {
     expect(isKrxHoliday("2025-05-01")).toBe(true);
-    expect(isHoliday("2025-05-01")).toBe(false);
+    expect(isHoliday("2025-05-01")).toBe(false); // 2025: 관공서 공휴일 아님
+    expect(isHoliday("2026-05-01")).toBe(true); // 2026~: 노동절이 공휴일로 지정됨 (천문연 특일정보 기준)
+    expect(isKrxHoliday("2026-05-01")).toBe(true);
   });
 
   it("관공서 공휴일은 KRX도 휴장", () => {

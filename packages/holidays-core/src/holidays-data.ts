@@ -1,15 +1,20 @@
 /**
- * 한국 공휴일 데이터.
+ * 한국 공휴일 데이터 (2021~2026).
  *
- * 이 파일은 `pnpm fetch:holidays`(scripts/fetch-holidays.ts)가 한국천문연구원
- * 「특일 정보」 공공데이터포털 API에서 받아 갱신하도록 설계되어 있다. 현재 시드 값은
- * 같은 출처의 공표 내용 + 정부 임시공휴일 지정 고시를 바탕으로 한 2021~2026년 데이터다.
+ * `pnpm fetch:holidays`(scripts/fetch-holidays.ts)가 한국천문연구원 「특일 정보」 공공데이터포털
+ * API에서 받아 갱신하며, `pnpm verify:holidays`로 그 API와 날짜 집합이 일치하는지 검증한다
+ * (현재 2021~2026 전부 일치 확인됨).
+ *
+ * 메모:
+ *  - 근로자의날(노동절, 5/1)은 2025년까지는 관공서 공휴일이 아니나 2026년부터 공휴일로 지정됨.
+ *    2025년 이전 연도엔 데이터에 없고, KRX 휴장 판정은 `isKrxHoliday`가 5/1을 항상 휴장으로 처리.
+ *  - 제헌절(7/17)은 「공휴일에 관한 법률」 개정으로 2026년부터 공휴일로 부활.
  *
  * `kind`:
- *  - `legal`        법정공휴일·국경일(설날·추석·삼일절·광복절 등)
+ *  - `legal`        법정공휴일·국경일(설날·추석·삼일절·광복절·노동절·제헌절 등)
  *  - `substitute`   대체공휴일
  *  - `temporary`    정부가 지정한 임시공휴일
- *  - `election`     임기만료에 의한 선거일(대통령·국회의원·지방선거)
+ *  - `election`     선거일(대통령·국회의원·지방선거 — API는 임시공휴일로 분류하기도 함)
  */
 
 export type HolidayKind = "legal" | "substitute" | "temporary" | "election";
@@ -133,6 +138,7 @@ export const HOLIDAYS: Readonly<Record<string, readonly HolidayEntry[]>> = {
     { date: "2026-02-18", name: "설날", kind: "legal" },
     { date: "2026-03-01", name: "삼일절", kind: "legal" },
     { date: "2026-03-02", name: "대체공휴일", kind: "substitute" },
+    { date: "2026-05-01", name: "노동절", kind: "legal" },
     { date: "2026-05-05", name: "어린이날", kind: "legal" },
     { date: "2026-05-24", name: "부처님오신날", kind: "legal" },
     { date: "2026-05-25", name: "대체공휴일", kind: "substitute" },

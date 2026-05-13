@@ -1,37 +1,42 @@
 /**
  * 커밋된 `packages/holidays-core/src/holidays-data.ts`의 공휴일 데이터가 한국천문연구원
- * 「특일 정보」 API와 일치하는지 검증한다. 불일치가 있으면 표로 찍고 exit 1.
+ * 「특일 정보」 API와 일치하는지 검증한다.
  *
- *   DATA_GO_KR_SERVICE_KEY=... pnpm verify:holidays [시작연도] [끝연도]
+ *   DATA_GO_KR_SERVICE_KEY=... pnpm verify:holidays [시작연도] [끝연도]   (또는 .env)
  *
- * - 기본 범위: 데이터가 보유한 연도 중 API가 커버하는 범위(보통 ~올해+1)와의 교집합.
- * - `kind`(legal/substitute/temporary/election)는 분류 규칙이 패키지마다 달라 비교하지 않고,
- *   날짜 집합과 (legal/substitute)에 한해 정규화한 이름을 비교한다. temporary/election은 날짜만.
+ * - 비교 기준: **공휴일 날짜 집합**. API 에만 있는 날(우리가 빠뜨림) / 우리에게만 있는 날(잘못 넣음)이
+ *   하나라도 있으면 실패한다.
+ * - 이름 표기 차이(예: API "1월1일" ↔ 데이터 "신정", API "대통령선거일" ↔ 데이터 "제21대 대통령선거")는
+ *   우리가 고른 라벨링이라 **실패로 치지 않고** 참고로만 출력한다.
  */
 
 import { HOLIDAYS } from "../packages/holidays-core/src/holidays-data";
 import { fetchHolidayYear, requireServiceKey } from "./lib/data-go-kr";
 
 function normalizeName(name: string): string {
-  // 표기 차이 흡수: 공백·중점 제거, 대체공휴일은 괄호 안 원인 제거
-  return name.replace(/\s/g, "").replace(/[ㆍ·]/g, "").replace(/^대체공휴일.*$/, "대체공휴일");
-}
-
-interface Diff {
-  year: number;
-  date: string;
-  inData: string | null;
-  inApi: string | null;
+  return name
+    .replace(/\s|[ㆍ·]/g, "")
+    .replace(/^임시공휴일\((.+)\)$/, "$1")
+    .replace(/^제\d+[대회]/, "")
+    .replace(/^대체공휴일.*$/, "대체공휴일")
+    .replace(/^1월1일$/, "신정")
+    .replace(/선거일$/, "선거");
 }
 
 async function main(): Promise<void> {
   const serviceKey = requireServiceKey();
   const now = new Date();
-  const dataYears = Object.keys(HOLIDAYS).map(Number).sort((a, b) => a - b);
+  const dataYears = Object.keys(HOLIDAYS)
+    .map(Number)
+    .sort((a, b) => a - b);
   const startYear = Number(process.argv[2] ?? dataYears[0] ?? 2004);
-  const endYear = Number(process.argv[3] ?? Math.min(dataYears[dataYears.length - 1] ?? now.getFullYear(), now.getFullYear() + 1));
+  const endYear = Number(
+    process.argv[3] ?? Math.min(dataYears[dataYears.length - 1] ?? now.getFullYear(), now.getFullYear() + 1),
+  );
 
-  const diffs: Diff[] = [];
+  const dateErrors: { year: number; date: string; side: "API에만 있음" | "데이터에만 있음" }[] = [];
+  const nameNotes: { year: number; date: string; data: string; api: string }[] = [];
+
   for (let year = startYear; year <= endYear; year += 1) {
     const dataList = HOLIDAYS[String(year)];
     if (!dataList) {
@@ -40,38 +45,65 @@ async function main(): Promise<void> {
     }
     const apiList = await fetchHolidayYear(serviceKey, year);
 
-    const dataByDate = new Map(dataList.map((h) => [h.date, h.name] as const));
-    const apiByDate = new Map(apiList.map((h) => [h.date, h.name] as const));
-    const allDates = new Set<string>([...dataByDate.keys(), ...apiByDate.keys()]);
+    const groupByDate = (list: { date: string; name: string }[]): Map<string, string[]> => {
+      const m = new Map<string, string[]>();
+      for (const h of list) {
+        const arr = m.get(h.date);
+        if (arr) arr.push(h.name);
+        else m.set(h.date, [h.name]);
+      }
+      return m;
+    };
+    const dataNamesByDate = groupByDate([...dataList]);
+    const apiNamesByDate = groupByDate(apiList);
+    const dataDates = new Set(dataNamesByDate.keys());
+    const apiDates = new Set(apiNamesByDate.keys());
 
-    let mismatch = 0;
-    for (const date of [...allDates].sort()) {
-      const d = dataByDate.get(date) ?? null;
-      const a = apiByDate.get(date) ?? null;
-      if (d === null || a === null) {
-        diffs.push({ year, date, inData: d, inApi: a });
-        mismatch += 1;
-      } else if (normalizeName(d) !== normalizeName(a)) {
-        diffs.push({ year, date, inData: d, inApi: a });
-        mismatch += 1;
+    let yearDateErrors = 0;
+    for (const date of [...new Set([...dataDates, ...apiDates])].sort()) {
+      const inData = dataDates.has(date);
+      const inApi = apiDates.has(date);
+      if (inData && !inApi) {
+        dateErrors.push({ year, date, side: "데이터에만 있음" });
+        yearDateErrors += 1;
+      } else if (!inData && inApi) {
+        dateErrors.push({ year, date, side: "API에만 있음" });
+        yearDateErrors += 1;
+      } else {
+        const dn = (dataNamesByDate.get(date) ?? []).map(normalizeName).sort().join("/");
+        const an = (apiNamesByDate.get(date) ?? []).map(normalizeName).sort().join("/");
+        if (dn !== an) {
+          nameNotes.push({
+            year,
+            date,
+            data: (dataNamesByDate.get(date) ?? []).join(", "),
+            api: (apiNamesByDate.get(date) ?? []).join(", "),
+          });
+        }
       }
     }
-    console.error(`  ${year}: 데이터 ${dataList.length}건 / API ${apiList.length}건 / 불일치 ${mismatch}건`);
+    console.error(
+      `  ${year}: 데이터 ${dataDates.size}일 / API ${apiDates.size}일 / 날짜 불일치 ${yearDateErrors}건`,
+    );
   }
 
-  if (diffs.length === 0) {
-    console.error("\n✔ 모든 연도가 한국천문연구원 API와 일치합니다.");
+  if (nameNotes.length > 0) {
+    console.error(`\n참고 — 이름 표기 차이 ${nameNotes.length}건 (검증 실패 아님):`);
+    for (const { year, date, data, api } of nameNotes) {
+      console.error(`  [${year}] ${date}  데이터: "${data}"  /  API: "${api}"`);
+    }
+  }
+
+  if (dateErrors.length === 0) {
+    console.error(`\n✔ 공휴일 날짜 집합이 한국천문연구원 API와 일치합니다 (${startYear}~${endYear}).`);
     return;
   }
 
-  console.error(`\n✗ 불일치 ${diffs.length}건:`);
-  for (const { year, date, inData, inApi } of diffs) {
-    const tag = inData === null ? "API에만 있음" : inApi === null ? "데이터에만 있음" : "이름 불일치";
-    console.error(`  [${year}] ${date}  ${tag}  (데이터: ${inData ?? "—"} / API: ${inApi ?? "—"})`);
-  }
+  console.error(`\n✗ 날짜 불일치 ${dateErrors.length}건:`);
+  for (const { year, date, side } of dateErrors) console.error(`  [${year}] ${date}  ${side}`);
   console.error(
-    "\n→ packages/holidays-core/src/holidays-data.ts 를 고치거나 (legal/substitute),\n" +
-      "  임시공휴일/선거일이면 scripts/fetch-holidays.ts 의 MANUAL_OVERRIDES 에 반영한 뒤 다시 검증하세요.",
+    "\n→ legal/substitute 면 packages/holidays-core/src/holidays-data.ts 를,\n" +
+      "  임시공휴일/선거일이 API 에 아직 없는 경우엔 scripts/fetch-holidays.ts 의 MANUAL_OVERRIDES 를 고친 뒤 다시 검증하세요.",
   );
   process.exit(1);
 }

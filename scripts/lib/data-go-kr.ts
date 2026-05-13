@@ -23,7 +23,16 @@ if (existsSync(ENV_FILE)) {
 
 const DEFAULT_REST_DE_INFO_URL =
   "https://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo";
-const REST_DE_INFO_URL = process.env.DATA_GO_KR_HOLIDAY_API_URL?.trim() || DEFAULT_REST_DE_INFO_URL;
+
+// 사용자가 data.go.kr 에서 보이는 "엔드포인트"(보통 .../SpcdeInfoService 까지의 base URL)만
+// .env 에 넣었을 수 있으므로, getRestDeInfo 오퍼레이션이 없으면 보강한다.
+function resolveEndpoint(): string {
+  const raw = process.env.DATA_GO_KR_HOLIDAY_API_URL?.trim();
+  if (!raw) return DEFAULT_REST_DE_INFO_URL;
+  if (/\/getRestDeInfo(\b|\?|$)/.test(raw)) return raw;
+  return `${raw.replace(/\/+$/, "")}/getRestDeInfo`;
+}
+const REST_DE_INFO_URL = resolveEndpoint();
 
 export type HolidayKind = "legal" | "substitute" | "temporary" | "election";
 
@@ -68,7 +77,9 @@ export function classifyHoliday(dateName: string): HolidayKind {
   return "legal";
 }
 
-/** 특정 연-월의 공휴일(`isHoliday === "Y"`) 항목들을 가져온다. */
+const sleep = (ms: number): Promise<void> => new Promise((r) => setTimeout(r, ms));
+
+/** 특정 연-월의 공휴일(`isHoliday === "Y"`) 항목들을 가져온다. data.go.kr 의 일시적 5xx 는 재시도한다. */
 export async function fetchHolidayMonth(
   serviceKey: string,
   year: number,
@@ -81,21 +92,38 @@ export async function fetchHolidayMonth(
   url.searchParams.set("numOfRows", "100");
   url.searchParams.set("_type", "json");
 
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText} — ${year}-${month}`);
-  const json = (await res.json()) as {
-    response?: {
-      header?: { resultCode?: string; resultMsg?: string };
-      body?: { items?: "" | { item?: RestItem | RestItem[] } };
-    };
-  };
-  const code = json.response?.header?.resultCode;
-  if (code && code !== "00") {
-    throw new Error(`API 오류 ${code}: ${json.response?.header?.resultMsg ?? "(메시지 없음)"} (${year}-${month})`);
+  const backoffs = [400, 1200, 3000]; // 4번 시도 (첫 시도 + 3 재시도)
+  for (let attempt = 0; ; attempt += 1) {
+    try {
+      const res = await fetch(url);
+      // 5xx 는 일시적 — 재시도
+      if (res.status >= 500 && res.status < 600 && attempt < backoffs.length) {
+        await sleep(backoffs[attempt]!);
+        continue;
+      }
+      if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText} — ${year}-${String(month).padStart(2, "0")}`);
+      const json = (await res.json()) as {
+        response?: {
+          header?: { resultCode?: string; resultMsg?: string };
+          body?: { items?: "" | { item?: RestItem | RestItem[] } };
+        };
+      };
+      const code = json.response?.header?.resultCode;
+      if (code && code !== "00") {
+        throw new Error(`API 오류 ${code}: ${json.response?.header?.resultMsg ?? "(메시지 없음)"} (${year}-${String(month).padStart(2, "0")})`);
+      }
+      const items = json.response?.body?.items;
+      if (!items || items === "" || !items.item) return [];
+      return Array.isArray(items.item) ? items.item : [items.item];
+    } catch (err) {
+      // 네트워크 오류(fetch 자체 실패)도 재시도
+      if (attempt < backoffs.length && err instanceof TypeError) {
+        await sleep(backoffs[attempt]!);
+        continue;
+      }
+      throw err;
+    }
   }
-  const items = json.response?.body?.items;
-  if (!items || items === "" || !items.item) return [];
-  return Array.isArray(items.item) ? items.item : [items.item];
 }
 
 /** 한 해의 공휴일 엔트리(날짜 오름차순). */

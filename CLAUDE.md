@@ -14,7 +14,7 @@
 - **주민등록번호(RRN)**: 형식 검증 + 마스킹만. 생년월일/성별 추출 함수 추가 금지(개인정보보호법). `test/rrn-security.test.ts`가 export 목록을 게이트함.
 - **공휴일 데이터**: 런타임 네트워크 호출 금지. `pnpm fetch:holidays`(`DATA_GO_KR_SERVICE_KEY` 필요)로 천문연 API에서 받아 `packages/holidays-core/src/holidays-data.ts`에 커밋. 임시공휴일·선거일이 API에 없으면 `scripts/fetch-holidays.ts`의 `MANUAL_OVERRIDES`에 추가. `pnpm verify:holidays`로 API와 일치 검증, `holidays-cross-check.test.ts`가 `@hyunbinseo/holidays-kr`와 교차 대조.
   - 데이터 수정 시 `docs/verification-checklist.md` 따라 수동 확인.
-  - 알아둘 점: 근로자의날(5/1)은 관공서 공휴일 아님(→ `isKrxHoliday`만). 2026년부터 제헌절(7/17) 부활.
+  - 알아둘 점: 근로자의날(5/1)은 2025년까지 관공서 공휴일 아님(`isKrxHoliday`만), **2026년부터 공휴일**. 제헌절(7/17)도 **2026년부터 부활**. (둘 다 천문연 특일정보 API·`@hyunbinseo/holidays-kr`로 교차 확인.)
 - **린트/타입체크 대체 금지**: tsc는 추가 레이어. 외부 정적분석 도구로 끄지 말 것.
 - **산출물 커밋 금지**: `dist/`, `.turbo/`, `coverage/`, `*.tsbuildinfo`는 .gitignore.
 - 새 native 의존성(better-sqlite3, tree-sitter 류) 추가 시 격리 임시 디렉터리에서 먼저 검증.

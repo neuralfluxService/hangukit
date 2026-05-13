@@ -14,15 +14,10 @@ const REFERENCE: Record<number, Readonly<Record<string, readonly string[]>>> = {
   2026: y2026,
 };
 
-// 근로자의날(노동절, 5/1)은 '관공서 공휴일'이 아니므로 kr-kit의 holidays-core는 다루지 않는다
-// (isKrxHoliday로만 처리). 레퍼런스 쪽에서 제외한다.
+// 근로자의날(노동절, 5/1)은 2025년까지는 관공서 공휴일이 아니어서 양쪽 다 안 들고,
+// 2026년부터는 양쪽 다 든다. 그러므로 별도 제외 없이 그대로 비교한다.
 function referenceDates(year: number): Set<string> {
-  const obj = REFERENCE[year]!;
-  return new Set(
-    Object.entries(obj)
-      .filter(([date, names]) => date.slice(5) !== "05-01" && !names.includes("노동절"))
-      .map(([date]) => date),
-  );
+  return new Set(Object.keys(REFERENCE[year]!));
 }
 
 function ourDates(year: number): Set<string> {
